@@ -11,6 +11,8 @@ const initialIndex = 4 // the index the "B" is at
 
 export default function AppFunctional(props) {
 const [index, setIndex] = useState(initialIndex)
+const [steps, setSteps] = useState(initialSteps)
+const [email, setEmail] = useState(initialEmail)
 
   function getXY(r) {
     // It it not necessary to have a state to track the coordinates.
@@ -30,14 +32,14 @@ const [index, setIndex] = useState(initialIndex)
       }
          
     }
-    
 
   }
-console.log(getXY(5)) 
+
   function getXYMessage() {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
+    return 'Coordinates('+ getXY(index)+ ')'
   }
 
   function reset() {
