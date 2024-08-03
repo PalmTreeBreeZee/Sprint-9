@@ -13,6 +13,7 @@ export default function AppFunctional(props) {
 const [index, setIndex] = useState(initialIndex)
 const [steps, setSteps] = useState(initialSteps)
 const [email, setEmail] = useState(initialEmail)
+const [messsage, setMessage] = useState(initialMessage)
 
   function getXY(r) {
     // It it not necessary to have a state to track the coordinates.
@@ -26,7 +27,7 @@ const [email, setEmail] = useState(initialEmail)
     
         if(count === r){
           console.log(xY[i], xY[j])
-          return [xY[i], xY[j]]
+          return [Number(xY[i]), Number(xY[j])]
         }
         count++  
       }
@@ -41,15 +42,45 @@ const [email, setEmail] = useState(initialEmail)
     // returns the fully constructed string.
     return 'Coordinates('+ getXY(index)+ ')'
   }
-
+ 
   function reset() {
     // Use this helper to reset all states to their initial values.
+    setIndex(initialIndex)
+    setSteps(initialSteps)
+    setEmail(initialEmail)
+    setMessage(initialMessage)
   }
 
   function getNextIndex(direction) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
+    let arr = getXY(index)
+    if (direction === 'left'){
+      if(arr[0] <= 3){
+       arr[0]--
+       return arr
+      } else return "You can't move left"
+    }
+    if (direction === 'right'){
+      if(arr[0] <= 3){
+       arr[0]++
+       return arr
+      } else return "You can't move right"
+    }
+    if (direction === 'up'){
+      if(arr[1] <= 3){
+       arr[1]--
+       return arr
+      } else return "You can't move up";
+    }
+      if (direction === 'down'){
+        if(arr[1] <= 3){
+         arr[1]++
+         return arr
+        } else return "You can't move down";
+      }
+    
   }
 
   function move(evt) {
