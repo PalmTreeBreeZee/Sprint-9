@@ -13,9 +13,9 @@ export default function AppFunctional(props) {
 const [index, setIndex] = useState(initialIndex)
 const [steps, setSteps] = useState(initialSteps)
 const [email, setEmail] = useState(initialEmail)
-const [messsage, setMessage] = useState(initialMessage)
-const [x, setX] = useState(0)
-const [y, setY] = useState(0)
+const [message, setMessage] = useState(initialMessage)
+const [x, setX] = useState(2)
+const [y, setY] = useState(2)
 
   function getXY(r) {
     // It it not necessary to have a state to track the coordinates.
@@ -28,22 +28,20 @@ const [y, setY] = useState(0)
       for(let j = 0; j < xY.length; j++){
     
         if(count === r){
-          console.log(xY[i], xY[j])
-          
           return [Number(xY[i]), Number(xY[j])]
         }
         count++  
       }
          
     }
-
+  
   }
-
+ 
   function getXYMessage() {
     // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
     // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
     // returns the fully constructed string.
-    return 'Coordinates('+ getXY(index)+ ')'
+    return 'Coordinates ('+ getXY(index)+ ')'
   }
  
   function reset() {
@@ -52,6 +50,7 @@ const [y, setY] = useState(0)
     setSteps(initialSteps)
     setEmail(initialEmail)
     setMessage(initialMessage)   
+    console.log('reset')
   }
   function getNextIndex(direction) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
@@ -60,25 +59,36 @@ const [y, setY] = useState(0)
     let arr = getXY(index)
     if (direction === 'left'){
       if(arr[0] <= 3){
-       arr[0]--
+       setIndex(index - 1)
+       console.log('left')
        return arr
+     
+     
       } else return "You can't move left"
     }
     if (direction === 'right'){
       if(arr[0] <= 3){
-       arr[0]++
+       if(index !== 2 || index !== 5 || index !== 8){
+       setIndex(index + 1)
+       console.log('right')
        return arr
-      } else return "You can't move right"
+       } else {
+        setMessage("You can't move right")
+        return
+       }
+      } 
     }
     if (direction === 'up'){
       if(arr[1] <= 3){
-       arr[1]--
+       setIndex(index - 3)
+       console.log('up')
        return arr
       } else return "You can't move up";
     }
       if (direction === 'down'){
         if(arr[1] <= 3){
-         arr[1]++
+         setIndex(index + 3)
+         console.log('down')
          return arr
         } else return "You can't move down";
       }
@@ -107,21 +117,21 @@ const [y, setY] = useState(0)
       <div id="grid">
         {
           [0, 1, 2, 3, 4, 5, 6, 7, 8].map(idx => (
-            <div key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
-              {idx === 4 ? 'B' : null}
+            <div key={idx} className={`square${idx === index ? ' active' : ''}`}>
+              {idx === index ? 'B' : null}
             </div>
           ))
         }
       </div>
       <div className="info">
-        <h3 id="message"></h3>
+        <h3 id="message">{message}</h3>
       </div>
       <div id="keypad">
-        <button id="left">LEFT</button>
-        <button id="up">UP</button>
-        <button id="right">RIGHT</button>
-        <button id="down">DOWN</button>
-        <button id="reset">reset</button>
+        <button id="left" onClick={() => getNextIndex('left')}>LEFT</button>
+        <button id="up" onClick={() => getNextIndex('up')}>UP</button>
+        <button id="right" onClick={() => getNextIndex('right')}>RIGHT</button>
+        <button id="down" onClick={() => getNextIndex('down')}>DOWN</button>
+        <button id="reset"onClick={() => reset()}>reset</button>
       </div>
       <form>
         <input id="email" type="email" placeholder="type email"></input>
