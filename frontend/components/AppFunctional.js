@@ -14,6 +14,8 @@ const [index, setIndex] = useState(initialIndex)
 const [steps, setSteps] = useState(initialSteps)
 const [email, setEmail] = useState(initialEmail)
 const [messsage, setMessage] = useState(initialMessage)
+const [x, setX] = useState(0)
+const [y, setY] = useState(0)
 
   function getXY(r) {
     // It it not necessary to have a state to track the coordinates.
@@ -27,6 +29,7 @@ const [messsage, setMessage] = useState(initialMessage)
     
         if(count === r){
           console.log(xY[i], xY[j])
+          
           return [Number(xY[i]), Number(xY[j])]
         }
         count++  
@@ -48,9 +51,8 @@ const [messsage, setMessage] = useState(initialMessage)
     setIndex(initialIndex)
     setSteps(initialSteps)
     setEmail(initialEmail)
-    setMessage(initialMessage)
+    setMessage(initialMessage)   
   }
-
   function getNextIndex(direction) {
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
