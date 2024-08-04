@@ -28,7 +28,7 @@ const [y, setY] = useState(2)
       for(let j = 0; j < xY.length; j++){
     
         if(count === r){
-          return [Number(xY[i]), Number(xY[j])]
+          return [Number(xY[j]), Number(xY[i])]
         }
         count++  
       }
@@ -56,41 +56,27 @@ const [y, setY] = useState(2)
     // This helper takes a direction ("left", "up", etc) and calculates what the next index
     // of the "B" would be. If the move is impossible because we are at the edge of the grid,
     // this helper should return the current index unchanged.
+
     let arr = getXY(index)
     if (direction === 'left'){
-      if(arr[0] <= 3){
-       setIndex(index - 1)
-       console.log('left')
-       return arr
-     
-     
-      } else return "You can't move left"
-    }
-    if (direction === 'right'){
-      if(arr[0] <= 3){
-       if(index !== 2 || index !== 5 || index !== 8){
-       setIndex(index + 1)
-       console.log('right')
-       return arr
-       } else {
-        setMessage("You can't move right")
-        return
-       }
+      if (index === 0 || index === 3 || index === 6) return setIndex(index)
+       else return [setIndex(index - 1), setSteps(steps + 1)]
       } 
-    }
+    
+    if (direction === 'right'){
+      if (index === 2 || index === 5 || index === 8) return setIndex(index)
+       else return [setIndex(index + 1), setSteps(steps + 1)]
+       } 
+      
+    
     if (direction === 'up'){
-      if(arr[1] <= 3){
-       setIndex(index - 3)
-       console.log('up')
-       return arr
-      } else return "You can't move up";
+      if (index - 3 < 0) return setIndex(index)
+       else return [setIndex(index - 3), setSteps(steps + 1)]
     }
       if (direction === 'down'){
-        if(arr[1] <= 3){
-         setIndex(index + 3)
-         console.log('down')
-         return arr
-        } else return "You can't move down";
+         if(index + 3 > 8) return setIndex(index)
+         return [setIndex(index + 3), setSteps(steps + 1)]
+
       }
     
   }
@@ -102,6 +88,9 @@ const [y, setY] = useState(2)
 
   function onChange(evt) {
     // You will need this to update the value of the input.
+    
+    
+   
   }
 
   function onSubmit(evt) {
@@ -134,7 +123,7 @@ const [y, setY] = useState(2)
         <button id="reset"onClick={() => reset()}>reset</button>
       </div>
       <form>
-        <input id="email" type="email" placeholder="type email"></input>
+        <input id="email" type="email" placeholder="type email" onChange={() => onChange()}></input>
         <input id="submit" type="submit"></input>
       </form>
     </div>
